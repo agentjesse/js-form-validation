@@ -67,6 +67,7 @@ import { logToConsole as lg, tableToConsole as tb } from './logger'; //shorthand
     lg( 'beginning manual form validation...' );
     lg( `email valid: ${emailInput.validity.valid}` );
     lg( `country selected: ${!countrySelect.validity.valueMissing}` );
+    // below should use checkValidity() on the form elements instead!!
     if (
       emailInput.validity.valid
       && !countrySelect.validity.valueMissing
