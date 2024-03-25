@@ -15,17 +15,13 @@ import { logToConsole as lg, tableToConsole as tb } from './logger'; //shorthand
   const countrySelect = document.querySelector('#countrySelect');
   const submitBtn = document.querySelector('#submitBtn');
 
-  //setup custom messages for form submissions before form elements' listener
-  // callbacks are activated and when browser validation is being used:
+  //setup custom messages if form submissions happen before form elements' listener
+  // callbacks are activated. CAREFUL! setting custom validity messages also make calls to checkValidity() fail if the message still exists.
   //for email input with validity object's valueMissing = true:
   emailInput.setCustomValidity( 'An email address is expected.' );//overwrite default message with a custom one
-  //custom message for unselected select element:
-  countrySelect.setCustomValidity( 'Please pick a country.' );//COMMENT OUT FOR BROWSER validation, messes up validity
 
   emailInput.addEventListener( 'input', ()=> {
-    // lg( 'validity state object: ' );
     // lg( emailInput.validity );//validity state object has entries related to validity of the data
-
     if ( emailInput.validity.typeMismatch ) {
       emailInput.setCustomValidity( 'An email address is expected.' ); //overwrite default message with a custom one
     } else {
@@ -45,32 +41,29 @@ import { logToConsole as lg, tableToConsole as tb } from './logger'; //shorthand
   //need to control noSelection class on select elements and show their messages in
   //their error message elements
   countrySelect.addEventListener( 'input', e=> {
-    if ( e.target.value ) {
+    if ( e.target.checkValidity() ) {
       e.target.classList.remove('noSelection');
-      //clear validationMessage if previously set
-      document.querySelector('#countryErrorMsg').textContent = '';
     } else {
       e.target.classList.add('noSelection');
-      //show validationMessage if it exists. comment out for browser validation
-      document.querySelector('#countryErrorMsg').textContent = countrySelect.validationMessage;
     }
+    //show/remove custom validation message (non Constraint Validation API)
+    document.querySelector('#countryErrorMsg').textContent = countrySelect.checkValidity() ? '' : 'Please pick a country';
   } );
 
   //the listener below is for manual js validation, OTHERWISE COMMENT OUT
   /* */
   submitBtn.addEventListener( 'click', e=> {
-    let isFormValid = false; //manual form submission control
-    // Prevent the default action of clicking on a button in a form (i.e., prevent form submission).
+    // Prevent the default action. Here, clicking on the form button will not lead to form submission.
     e.preventDefault();
 
+    let isFormValid = false; //manual form submission control
+
     // Manual form validity checks
-    lg( 'beginning manual form validation...' );
-    lg( `email valid: ${emailInput.validity.valid}` );
-    lg( `country selected: ${!countrySelect.validity.valueMissing}` );
-    // below should use checkValidity() on the form elements instead!!
+    // lg( `email valid: ${ emailInput.checkValidity() }` );
+    // lg( `country selected: ${ countrySelect.checkValidity() }` );
     if (
-      emailInput.validity.valid
-      && !countrySelect.validity.valueMissing
+      emailInput.checkValidity()
+      && countrySelect.checkValidity()
     ) {
       isFormValid = true;
     }
