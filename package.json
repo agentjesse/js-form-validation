@@ -1,8 +1,8 @@
 {
-  "name": "webpack-odin-boilerplate",
+  "name": "js-form-validation",
   "version": "1.0.0",
   "private": true,
-  "description": "Base boilerplate for new projects. Repo is github backup. Created from Odin library project.",
+  "description": "js-form-validation",
   "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/agentjesse/webpack-odin-boilerplate.git"
+    "url": "git+https://github.com/agentjesse/js-form-validation.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/agentjesse/webpack-odin-boilerplate/issues"
+    "url": "https://github.com/agentjesse/js-form-validation/issues"
   },
-  "homepage": "https://github.com/agentjesse/webpack-odin-boilerplate#readme",
+  "homepage": "https://github.com/agentjesse/js-form-validation#readme",
   "devDependencies": {
     "css-loader": "^6.10.0",
     "eslint": "^8.57.0",
